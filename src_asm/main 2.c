@@ -6,11 +6,49 @@
 /*   By: polina <polina@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 17:41:27 by polina            #+#    #+#             */
-/*   Updated: 2021/01/26 17:41:54 by polina           ###   ########.fr       */
+/*   Updated: 2021/01/13 20:46:10 by polina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+void	error()
+{
+	write(1, "ERROR\n", 6);
+	exit(0);
+}
+
+/*
+ ** Проверка имени файла на нужное расширение и создание имени с расширением .cor
+*/
+char	*ft_check_name(char *name)
+{
+	char	*point;
+	char	*tmp_name;
+	char	*new_name;
+
+	if (!(point = ft_strchr(name, '.')))
+		error();
+	tmp_name = ft_strsub(name, 0, point - name);
+	point++;
+	if (ft_strcmp(point, "s"))
+		error();
+	new_name = ft_strjoin(tmp_name, ".cor");
+	free(tmp_name);
+	return (new_name);
+}
+
+void	ft_print_labels(t_asm *st)
+{
+	t_label *tmp = st->label;
+	while (tmp)
+	{
+		printf("Name: %s\nBytes: %d\n", tmp->name, tmp->byte_pos);
+		printf("----\n");
+		tmp = tmp->next;
+	}
+	printf("%d\n", st->count_bytes);
+}
 
 void	ft_init_size_dir(t_asm *st)
 {
@@ -58,39 +96,24 @@ void	ft_init_op_tab(t_asm *st)
 	ft_init_size_dir(st);
 }
 
-void	ft_del_struct(t_asm *st, char **name)
-{
-	t_label	*tmp;
-	t_label *next;
-
-	tmp = st->label;
-	while (tmp)
-	{
-		next = tmp->next;
-		ft_strdel(&tmp->name);
-		free(tmp);
-		tmp = next;
-	}
-	st->label = NULL;
-	ft_strdel(name);
-	ft_strdel(&st->name);
-	ft_strdel(&st->comment);
-	ft_strdel((char **)&st->exec_code);
-}
-
 int		main(int ac, char **av) {
 	char	*name;
 	t_asm	st;
 
 	if (ac != 2)
-		error("Wrong number of arguments", 0);
+		error();
 	ft_bzero(&st, sizeof(t_asm));
+	// write(1, COREWAR_EXEC_MAGIC, 1);
+	// printf("%d\n", COREWAR_EXEC_MAGIC);
+	// printf("ok\n");
 	name = ft_check_name(av[1]);
 	if ((st.fd_orig = open(av[1], O_RDONLY)) == -1 || \
 	(st.fd_res = open(name, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR)) == -1)
-		error("Failed to open file", 0);
+		error();
 	ft_init_op_tab(&st);
-	ft_read(&st, name, av[1]);
-	ft_del_struct(&st, &name);
-	return (0);
+	// printf("%s\n", st.op_tab[16].name);
+	ft_read(&st, name);
+	// free(name);
+	// ft_print_labels(&st);
+	// printf("%d %d\n", st.fd_orig, st.fd_res);
 }

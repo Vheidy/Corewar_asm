@@ -3,38 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polina <polina@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vheidy <vheidy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 17:38:31 by vheidy            #+#    #+#             */
-/*   Updated: 2021/01/20 17:59:12 by polina           ###   ########.fr       */
+/*   Updated: 2020/10/11 14:47:29 by vheidy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int			ft_atoi(const char *str)
+static int		space(char c)
 {
-	long int		result;
-	int				neg;
+	if (c == ' ' || c == '\n' || c == '\f' || c == '\v'
+			|| c == '\t' || c == '\r')
+		return (1);
+	return (0);
+}
 
-	result = 0;
-	neg = 1;
-	while (*str == 32 || *str == '\t' || *str == '\n' ||
-				*str == '\v' || *str == '\f' || *str == '\r')
-		str++;
-	if (*str == '-')
+long long int	ft_atoi(const char *s)
+{
+	int				fl;
+	long long int	at;
+	long long int	r;
+	int				i;
+
+	fl = 1;
+	at = 0;
+	i = 0;
+	while (space(s[i]) == 1)
+		i++;
+	if (s[i] == '-')
+		fl = -1;
+	if (s[i] == '-' || s[i] == '+')
+		i++;
+	while (ft_isdigit(s[i]) == 1)
 	{
-		str++;
-		neg = -1;
+		r = at;
+		at = at * 10 + (s[i] - '0');
+		if (r != (at / 10) && fl == 1)
+			return (-1);
+		if (r != (at / 10) && fl == -1)
+			return (0);
+		i++;
 	}
-	if (*str == '+' && neg == 1)
-		str++;
-	while (*str >= '0' && *str <= '9')
-	{
-		result = result * 10 + *str - 48;
-		str++;
-	}
-	if (result > result * 10)
-		return (-(neg == 1));
-	return (result * neg);
+	return (at * fl);
 }

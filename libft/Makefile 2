@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: polina <polina@student.42.fr>              +#+  +:+       +#+         #
+#    By: vheidy <vheidy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/09 21:38:06 by vheidy            #+#    #+#              #
-#    Updated: 2021/01/26 16:38:09 by polina           ###   ########.fr        #
+#    Updated: 2020/12/03 20:09:03 by vheidy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,7 @@ ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c \
 ft_strrchr.c ft_strsplit.c ft_strstr.c ft_strsub.c \
 ft_strtrim.c ft_tolower.c ft_toupper.c ft_base_intlen.c \
 ft_power.c ft_intlen.c ft_itoa_base.c ft_itoa_unsig_base.c \
-ft_atoi_base.c ft_put_n_line_char.c ft_del_two_dim_array.c \
-ft_len_two_dim_array.c
+ft_atoi_base.c ft_put_n_line_char.c
 
 HEADER = libft.h
 

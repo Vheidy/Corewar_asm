@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polina <polina@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vheidy <vheidy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 21:24:59 by vheidy            #+#    #+#             */
-/*   Updated: 2021/01/26 16:37:08 by polina           ###   ########.fr       */
+/*   Updated: 2020/12/03 20:09:18 by vheidy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ typedef struct		s_gnl
 	struct s_gnl	*next;
 }					t_gnl;
 
-int					ft_len_two_dim_array(char **arr);
-void				ft_del_two_dim_array(char ***arr);
 int					get_next_line(const int fd, char **line);
 
 char				*ft_strjoin_free_all(char **s1, char **s2);
@@ -75,7 +73,7 @@ void				ft_strdel(char **as);
 char				*ft_strnew(size_t size);
 void				ft_memdel(void **app);
 void				*ft_memalloc(size_t size);
-int					ft_atoi(const char *str);
+long long int		ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);
 int					ft_isalnum(int c);
 int					ft_isalpha(int c);
