@@ -6,7 +6,7 @@
 /*   By: polina <polina@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:42:31 by polina            #+#    #+#             */
-/*   Updated: 2021/02/05 14:57:19 by polina           ###   ########.fr       */
+/*   Updated: 2021/02/11 14:18:46 by polina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,20 @@ char	*ft_check_name(char *name)
 	char	*point;
 	char	*tmp_name;
 	char	*new_name;
+	int		len;
 
-	if (!(point = ft_strchr(name, '.')))
+	if ((len = ft_strlen(name)) < 2)
+		error("Wrong file name", 0);
+	point = &name[len - 2];
+	if (!ft_strcmp(point, ".s\n"))
 		error("Wrong file extension", 0);
-	tmp_name = ft_strsub(name, 0, point - name);
-	point++;
-	if (ft_strcmp(point, "s"))
-		error("Wrong file extension", 0);
-	new_name = ft_strjoin(tmp_name, ".cor");
-	free(tmp_name);
+	tmp_name = point;
+	while (*(tmp_name - 1) && *(tmp_name - 1) != '/')
+		tmp_name--;
+	new_name = ft_strsub(tmp_name, 0, point - tmp_name);
+	point = new_name;
+	new_name = ft_strjoin(point, ".cor");
+	free(point);
 	return (new_name);
 }
 
